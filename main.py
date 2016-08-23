@@ -19,13 +19,12 @@ def fetchnextpage(p):
     return requests.get(baseURL + '/rating/next/' + str(p)).content
 
 # Create a Soup that takes an HTML object as a parameter and returns
-# al list of Tag objects meeting our criteria
+# a list of Tag objects meeting our criteria
 def CreateSoup(v):
     return BeautifulSoup(v, parser).find_all("a", {"class":"guild horde"})
     
-# Returns a list of guild names
+# Returns a generator of guild names by chaining the first page to subsequent pages
 def getguilds(u, n):
-    # Get page 1 (different URL parameters) and chain it to the subsequent pages
     return chain(getpage1(u), getnextpages(u, n))
 
 # Get first page of guild names
